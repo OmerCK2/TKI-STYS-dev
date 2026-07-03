@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TkiMisafirhane.API", "TkiMisafirhane.API\TkiMisafirhane.API.csproj", "{8F8E4D5D-4616-4CED-AF93-6EDBB20DDBE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TkiMisafirhane.Business", "TkiMisafirhane.Business\TkiMisafirhane.Business.csproj", "{671A8E07-0053-43B8-8AE7-796AC2B0B798}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TkiMisafirhane.DataAccess", "TkiMisafirhane.DataAccess\TkiMisafirhane.DataAccess.csproj", "{2067FDB3-8888-4F8B-9E1B-68B60F3C09E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TkiMisafirhane.Core", "TkiMisafirhane.Core\TkiMisafirhane.Core.csproj", "{E3E8A193-FF04-4DFD-8269-4119D445FF51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F8E4D5D-4616-4CED-AF93-6EDBB20DDBE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8E4D5D-4616-4CED-AF93-6EDBB20DDBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8E4D5D-4616-4CED-AF93-6EDBB20DDBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8E4D5D-4616-4CED-AF93-6EDBB20DDBE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{671A8E07-0053-43B8-8AE7-796AC2B0B798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671A8E07-0053-43B8-8AE7-796AC2B0B798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671A8E07-0053-43B8-8AE7-796AC2B0B798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{671A8E07-0053-43B8-8AE7-796AC2B0B798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2067FDB3-8888-4F8B-9E1B-68B60F3C09E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2067FDB3-8888-4F8B-9E1B-68B60F3C09E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2067FDB3-8888-4F8B-9E1B-68B60F3C09E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2067FDB3-8888-4F8B-9E1B-68B60F3C09E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3E8A193-FF04-4DFD-8269-4119D445FF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3E8A193-FF04-4DFD-8269-4119D445FF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3E8A193-FF04-4DFD-8269-4119D445FF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3E8A193-FF04-4DFD-8269-4119D445FF51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
