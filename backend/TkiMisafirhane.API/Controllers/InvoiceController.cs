@@ -17,19 +17,22 @@ namespace TkiMisafirhane.API.Controllers
         private readonly IGuestRepository _guestRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IExtraChargeRepository _extraChargeRepository;
+        private readonly Business.Interfaces.IInvoiceService _invoiceService;
 
         public InvoiceController(
             IInvoiceRepository invoiceRepository,
             IReservationRepository reservationRepository,
             IGuestRepository guestRepository,
             IRoomRepository roomRepository,
-            IExtraChargeRepository extraChargeRepository)
+            IExtraChargeRepository extraChargeRepository,
+            Business.Interfaces.IInvoiceService invoiceService)
         {
             _invoiceRepository = invoiceRepository;
             _reservationRepository = reservationRepository;
             _guestRepository = guestRepository;
             _roomRepository = roomRepository;
             _extraChargeRepository = extraChargeRepository;
+            _invoiceService = invoiceService;
         }
 
         [HttpGet]
@@ -180,6 +183,20 @@ namespace TkiMisafirhane.API.Controllers
             await _invoiceRepository.UpdateAsync(invoice);
 
             return Ok(ApiResponseDto<InvoiceDto>.SuccessResponse(await MapToDto(invoice), "Fatura durumu güncellendi"));
+        }
+
+        [HttpGet("{id}/pdf")]
+        public async Task<IActionResult> GetInvoicePdf(string id)
+        {
+            try
+            {
+                var pdfBytes = await _invoiceService.GenerateInvoicePdfAsync(id);
+                return File(pdfBytes, "application/pdf", $"fatura-{id[..8]}.pdf");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         private async Task<InvoiceDto> MapToDto(Invoice invoice)

@@ -6,6 +6,8 @@ using QuestPDF;
 using TkiMisafirhane.API.Hubs;
 using TkiMisafirhane.API.Repositories;
 using TkiMisafirhane.API.Services;
+using TkiMisafirhane.Business.Interfaces;
+using TkiMisafirhane.Business.Services;
 using TkiMisafirhane.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -103,6 +105,11 @@ builder.Services.AddScoped<IInvoiceRepository, MockInvoiceRepository>();
 builder.Services.AddScoped<IExtraChargeRepository, MockExtraChargeRepository>();
 builder.Services.AddScoped<IUserRepository, MockUserRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IGuestService, GuestService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 
 var app = builder.Build();
 
