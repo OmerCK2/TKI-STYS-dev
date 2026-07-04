@@ -9,6 +9,8 @@ namespace TkiMisafirhane.Core.Entities
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
+        public bool IsAdmin { get; set; } = false;
+        public bool RequiresPasswordChange { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

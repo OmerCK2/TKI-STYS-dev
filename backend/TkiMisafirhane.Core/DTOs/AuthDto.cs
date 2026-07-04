@@ -6,6 +6,7 @@ namespace TkiMisafirhane.Core.DTOs
         public DateTime Expiration { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public bool RequiresPasswordChange { get; set; }
     }
 
     public class LoginDto
@@ -30,5 +31,23 @@ namespace TkiMisafirhane.Core.DTOs
         public string Email { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; }
+        public bool RequiresPasswordChange { get; set; }
+    }
+
+    public class ChangePasswordDto
+    {
+        public string CurrentPassword { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
+        public string ConfirmNewPassword { get; set; } = string.Empty;
+    }
+
+    public class AdminCreateUserDto
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; } = false;
     }
 }

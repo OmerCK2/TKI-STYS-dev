@@ -18,7 +18,7 @@ namespace TkiMisafirhane.API.Repositories
 
         private void SeedData()
         {
-            var user = new User
+            var adminUser = new User
             {
                 Id = Guid.NewGuid().ToString(),
                 Username = "admin",
@@ -26,9 +26,11 @@ namespace TkiMisafirhane.API.Repositories
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
                 FirstName = "Admin",
                 LastName = "User",
-                IsActive = true
+                IsActive = true,
+                IsAdmin = true,
+                RequiresPasswordChange = false
             };
-            _users.TryAdd(user.Id, user);
+            _users.TryAdd(adminUser.Id, adminUser);
         }
 
         public Task<User?> GetByIdAsync(string id)
@@ -47,6 +49,11 @@ namespace TkiMisafirhane.API.Repositories
         {
             var user = _users.Values.FirstOrDefault(u => u.Email == email);
             return Task.FromResult(user);
+        }
+
+        public Task<IEnumerable<User>> GetAllAsync()
+        {
+            return Task.FromResult(_users.Values.AsEnumerable());
         }
 
         public Task<User> CreateAsync(User user)

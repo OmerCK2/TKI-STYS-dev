@@ -7,6 +7,7 @@ namespace TkiMisafirhane.Core.Interfaces
         Task<User?> GetByIdAsync(string id);
         Task<User?> GetByUsernameAsync(string username);
         Task<User?> GetByEmailAsync(string email);
+        Task<IEnumerable<User>> GetAllAsync();
         Task<User> CreateAsync(User user);
         Task<User> UpdateAsync(User user);
     }
