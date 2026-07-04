@@ -8,7 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TkiMisafirhane.Core\TkiMisafirhane.Core.csproj" />
-    <ProjectReference Include="..\TkiMisafirhane.DataAccess\TkiMisafirhane.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="QuestPDF" Version="2024.3.0" />
   </ItemGroup>
 
 </Project>
