@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TkiMisafirhane.Core.Specifications;
 
 namespace TkiMisafirhane.Core.Interfaces
 {
@@ -11,5 +12,6 @@ namespace TkiMisafirhane.Core.Interfaces
         Task<T> CreateAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<bool> DeleteAsync(string id);
+        Task<IEnumerable<T>> GetWithSpecAsync(ISpecification<T> spec);
     }
 }
