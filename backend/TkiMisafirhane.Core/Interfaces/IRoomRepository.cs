@@ -3,14 +3,9 @@ using TkiMisafirhane.Core.Enums;
 
 namespace TkiMisafirhane.Core.Interfaces
 {
-    public interface IRoomRepository
+    public interface IRoomRepository : IRepository<Room>
     {
-        Task<Room?> GetByIdAsync(string id);
         Task<Room?> GetByRoomNumberAsync(int roomNumber);
-        Task<IEnumerable<Room>> GetAllAsync();
         Task<IEnumerable<Room>> GetByStatusAsync(RoomStatus status);
-        Task<Room> CreateAsync(Room room);
-        Task<Room> UpdateAsync(Room room);
-        Task<bool> DeleteAsync(string id);
     }
 }
