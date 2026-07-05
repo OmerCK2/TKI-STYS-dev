@@ -171,7 +171,7 @@ namespace TkiMisafirhane.API.Controllers
         }
 
         [HttpPut("{id}/status")]
-        public async Task<ActionResult<ApiResponseDto<InvoiceDto>>> UpdateStatus(string id, [FromBody] InvoiceStatus status)
+        public async Task<ActionResult<ApiResponseDto<InvoiceDto>>> UpdateStatus(string id, [FromBody] InvoiceStatusUpdateDto dto)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(id);
             if (invoice == null)
@@ -179,7 +179,7 @@ namespace TkiMisafirhane.API.Controllers
                 return NotFound(ApiResponseDto<InvoiceDto>.ErrorResponse("Fatura bulunamadı"));
             }
 
-            invoice.Status = status;
+            invoice.Status = dto.Status;
             await _invoiceRepository.UpdateAsync(invoice);
 
             return Ok(ApiResponseDto<InvoiceDto>.SuccessResponse(await MapToDto(invoice), "Fatura durumu güncellendi"));

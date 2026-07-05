@@ -35,4 +35,9 @@ namespace TkiMisafirhane.Core.DTOs
         public string Description { get; set; } = string.Empty;
         public decimal Amount { get; set; }
     }
+
+    public class InvoiceStatusUpdateDto
+    {
+        public InvoiceStatus Status { get; set; }
+    }
 }

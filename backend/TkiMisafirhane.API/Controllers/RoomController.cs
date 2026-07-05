@@ -94,6 +94,21 @@ namespace TkiMisafirhane.API.Controllers
             return Ok(ApiResponseDto<RoomDto>.SuccessResponse(MapToDto(updatedRoom), "Oda başarıyla güncellendi"));
         }
 
+        [HttpPut("{id}/status")]
+        public async Task<ActionResult<ApiResponseDto<RoomDto>>> UpdateStatus(string id, [FromBody] RoomStatusUpdateDto dto)
+        {
+            var room = await _roomRepository.GetByIdAsync(id);
+            if (room == null)
+            {
+                return NotFound(ApiResponseDto<RoomDto>.ErrorResponse("Oda bulunamadı"));
+            }
+
+            room.Status = dto.Status;
+            var updatedRoom = await _roomRepository.UpdateAsync(room);
+            await BroadcastRoomUpdate();
+            return Ok(ApiResponseDto<RoomDto>.SuccessResponse(MapToDto(updatedRoom), "Oda durumu güncellendi"));
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<ApiResponseDto<object>>> Delete(string id)
         {

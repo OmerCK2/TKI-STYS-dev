@@ -29,4 +29,9 @@ namespace TkiMisafirhane.Core.DTOs
         public decimal NightlyRateCivilian { get; set; }
         public RoomStatus Status { get; set; }
     }
+
+    public class RoomStatusUpdateDto
+    {
+        public RoomStatus Status { get; set; }
+    }
 }
