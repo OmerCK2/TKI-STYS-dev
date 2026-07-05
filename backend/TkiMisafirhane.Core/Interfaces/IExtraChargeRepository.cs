@@ -2,11 +2,8 @@ using TkiMisafirhane.Core.Entities;
 
 namespace TkiMisafirhane.Core.Interfaces
 {
-    public interface IExtraChargeRepository
+    public interface IExtraChargeRepository : IRepository<ExtraCharge>
     {
-        Task<ExtraCharge?> GetByIdAsync(string id);
         Task<IEnumerable<ExtraCharge>> GetByInvoiceIdAsync(string invoiceId);
-        Task<ExtraCharge> CreateAsync(ExtraCharge extraCharge);
-        Task<bool> DeleteAsync(string id);
     }
 }

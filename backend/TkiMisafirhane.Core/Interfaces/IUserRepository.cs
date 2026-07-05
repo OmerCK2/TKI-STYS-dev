@@ -2,13 +2,9 @@ using TkiMisafirhane.Core.Entities;
 
 namespace TkiMisafirhane.Core.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        Task<User?> GetByIdAsync(string id);
         Task<User?> GetByUsernameAsync(string username);
         Task<User?> GetByEmailAsync(string email);
-        Task<IEnumerable<User>> GetAllAsync();
-        Task<User> CreateAsync(User user);
-        Task<User> UpdateAsync(User user);
     }
 }

@@ -2,9 +2,8 @@ using TkiMisafirhane.Core.Enums;
 
 namespace TkiMisafirhane.Core.Entities
 {
-    public class Invoice
+    public class Invoice : BaseEntity
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string ReservationId { get; set; } = string.Empty;
         public string GuestId { get; set; } = string.Empty;
         public DateTime IssueDate { get; set; } = DateTime.UtcNow;
@@ -17,7 +16,6 @@ namespace TkiMisafirhane.Core.Entities
         public decimal TotalAmount { get; set; }
         public InvoiceStatus Status { get; set; } = InvoiceStatus.Pending;
         public string? Notes { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         
         public Reservation? Reservation { get; set; }
         public Guest? Guest { get; set; }
