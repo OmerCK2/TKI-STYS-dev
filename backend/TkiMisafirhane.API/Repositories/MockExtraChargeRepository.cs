@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using TkiMisafirhane.Core.Entities;
 using TkiMisafirhane.Core.Interfaces;
+using TkiMisafirhane.Core.Specifications;
 
 namespace TkiMisafirhane.API.Repositories
 {
@@ -20,6 +21,11 @@ namespace TkiMisafirhane.API.Repositories
             return Task.FromResult(extraCharges);
         }
 
+        public Task<IEnumerable<ExtraCharge>> GetAllAsync()
+        {
+            return Task.FromResult(_extraCharges.Values.AsEnumerable());
+        }
+
         public Task<ExtraCharge> CreateAsync(ExtraCharge extraCharge)
         {
             extraCharge.Id = Guid.NewGuid().ToString();
@@ -28,9 +34,22 @@ namespace TkiMisafirhane.API.Repositories
             return Task.FromResult(extraCharge);
         }
 
+        public Task<ExtraCharge> UpdateAsync(ExtraCharge extraCharge)
+        {
+            extraCharge.UpdatedAt = DateTime.UtcNow;
+            _extraCharges[extraCharge.Id] = extraCharge;
+            return Task.FromResult(extraCharge);
+        }
+
         public Task<bool> DeleteAsync(string id)
         {
             return Task.FromResult(_extraCharges.TryRemove(id, out _));
+        }
+
+        public Task<IEnumerable<ExtraCharge>> GetWithSpecAsync(ISpecification<ExtraCharge> spec)
+        {
+            var predicate = spec.Criteria.Compile();
+            return Task.FromResult(_extraCharges.Values.Where(predicate).AsEnumerable());
         }
     }
 }

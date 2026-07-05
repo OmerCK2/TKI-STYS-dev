@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using TkiMisafirhane.Core.Entities;
 using TkiMisafirhane.Core.Enums;
 using TkiMisafirhane.Core.Interfaces;
+using TkiMisafirhane.Core.Specifications;
 
 namespace TkiMisafirhane.API.Repositories
 {
@@ -49,6 +50,12 @@ namespace TkiMisafirhane.API.Repositories
         public Task<bool> DeleteAsync(string id)
         {
             return Task.FromResult(_invoices.TryRemove(id, out _));
+        }
+
+        public Task<IEnumerable<Invoice>> GetWithSpecAsync(ISpecification<Invoice> spec)
+        {
+            var predicate = spec.Criteria.Compile();
+            return Task.FromResult(_invoices.Values.Where(predicate).AsEnumerable());
         }
     }
 }

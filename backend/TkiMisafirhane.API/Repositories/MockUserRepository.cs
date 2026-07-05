@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using TkiMisafirhane.Core.Entities;
 using TkiMisafirhane.Core.Interfaces;
+using TkiMisafirhane.Core.Specifications;
 
 namespace TkiMisafirhane.API.Repositories
 {
@@ -66,8 +67,20 @@ namespace TkiMisafirhane.API.Repositories
 
         public Task<User> UpdateAsync(User user)
         {
+            user.UpdatedAt = DateTime.UtcNow;
             _users[user.Id] = user;
             return Task.FromResult(user);
+        }
+
+        public Task<bool> DeleteAsync(string id)
+        {
+            return Task.FromResult(_users.TryRemove(id, out _));
+        }
+
+        public Task<IEnumerable<User>> GetWithSpecAsync(ISpecification<User> spec)
+        {
+            var predicate = spec.Criteria.Compile();
+            return Task.FromResult(_users.Values.Where(predicate).AsEnumerable());
         }
     }
 }
