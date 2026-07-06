@@ -1,6 +1,4 @@
 ﻿namespace TkiMisafirhane.DataAccess;
 
-public class Class1
-{
-
-}
+// This project provides the Firebase Firestore data access layer.
+// See DependencyInjection.cs for service registration.
