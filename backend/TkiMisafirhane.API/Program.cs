@@ -4,11 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuestPDF;
 using TkiMisafirhane.API.Hubs;
-using TkiMisafirhane.API.Repositories;
 using TkiMisafirhane.API.Services;
 using TkiMisafirhane.Business.Interfaces;
 using TkiMisafirhane.Business.Services;
 using TkiMisafirhane.Core.Interfaces;
+using TkiMisafirhane.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,12 +98,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddScoped<IRoomRepository, MockRoomRepository>();
-builder.Services.AddScoped<IGuestRepository, MockGuestRepository>();
-builder.Services.AddScoped<IReservationRepository, MockReservationRepository>();
-builder.Services.AddScoped<IInvoiceRepository, MockInvoiceRepository>();
-builder.Services.AddScoped<IExtraChargeRepository, MockExtraChargeRepository>();
-builder.Services.AddScoped<IUserRepository, MockUserRepository>();
+var firestoreProjectId = builder.Configuration["Firestore:ProjectId"] ?? "your-project-id";
+var firestoreCredentialsPath = builder.Configuration["Firestore:CredentialsPath"] ?? Path.Combine(AppContext.BaseDirectory, "serviceAccountKey.json");
+
+builder.Services.AddDataAccess(firestoreProjectId, firestoreCredentialsPath);
+
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddScoped<IRoomService, RoomService>();
