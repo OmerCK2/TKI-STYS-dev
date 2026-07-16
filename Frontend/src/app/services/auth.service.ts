@@ -2,7 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
-import { LoginDto, AuthResponseDto, UserDto, ApiResponse } from '../models/auth.model';
+import { LoginDto, AuthResponseDto, UserDto, ApiResponse, ChangePasswordDto, AdminCreateUserDto } from '../models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,6 +13,8 @@ export class AuthService {
 
   readonly isAuthenticated = computed(() => !!this._token());
   readonly currentUser = this._user.asReadonly();
+  readonly isAdmin = computed(() => this._user()?.isAdmin === true);
+  readonly requiresPasswordChange = computed(() => this._user()?.requiresPasswordChange === true);
 
   constructor(private http: HttpClient) {
     if (this._token()) {
@@ -32,9 +34,10 @@ export class AuthService {
             email: res.data.email,
             firstName: '',
             lastName: '',
-            isAdmin: false,
+            isAdmin: res.data.isAdmin,
             requiresPasswordChange: res.data.requiresPasswordChange,
           });
+          this.loadUser();
         }
       })
     );
@@ -49,6 +52,27 @@ export class AuthService {
       },
       error: () => this.logout(),
     });
+  }
+
+  changePassword(dto: ChangePasswordDto): Observable<ApiResponse<object>> {
+    return this.http.post<ApiResponse<object>>(`${this.apiUrl}/change-password`, dto).pipe(
+      tap((res) => {
+        if (res.success) {
+          const user = this._user();
+          if (user) {
+            this._user.set({ ...user, requiresPasswordChange: false });
+          }
+        }
+      })
+    );
+  }
+
+  createUser(dto: AdminCreateUserDto): Observable<ApiResponse<UserDto>> {
+    return this.http.post<ApiResponse<UserDto>>(`${this.apiUrl}/create-user`, dto);
+  }
+
+  getAllUsers(): Observable<ApiResponse<UserDto[]>> {
+    return this.http.get<ApiResponse<UserDto[]>>(`${this.apiUrl}/users`);
   }
 
   logout(): void {

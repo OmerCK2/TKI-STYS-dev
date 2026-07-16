@@ -8,6 +8,7 @@ export interface AuthResponseDto {
   expiration: string;
   username: string;
   email: string;
+  isAdmin: boolean;
   requiresPasswordChange: boolean;
 }
 
@@ -26,4 +27,18 @@ export interface ApiResponse<T> {
   message: string;
   data: T;
   errors: string[];
+}
+
+export interface ChangePasswordDto {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+export interface AdminCreateUserDto {
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  isAdmin: boolean;
 }

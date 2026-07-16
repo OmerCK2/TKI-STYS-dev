@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject, OnChanges } from '@angular/core';
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
@@ -11,6 +11,7 @@ import { ReservationDto, ExtraChargeDto } from '../../models/reservation.model';
 import { InvoiceDto } from '../../models/invoice.model';
 import { ReservationService } from '../../services/reservation.service';
 import { InvoiceService } from '../../services/invoice.service';
+import { TryFormatPipe } from '../../pipes/ttry.pipe';
 
 @Component({
   selector: 'app-checkout-modal',
@@ -23,8 +24,8 @@ import { InvoiceService } from '../../services/invoice.service';
     ButtonModule,
     Dialog,
     TableModule,
-    CurrencyPipe,
     DatePipe,
+    TryFormatPipe,
   ],
   providers: [MessageService],
   template: `
@@ -63,7 +64,7 @@ import { InvoiceService } from '../../services/invoice.service';
           <div class="cost-section">
             <div class="cost-row main-cost">
               <span>Konaklama Tutarı</span>
-              <span class="cost-value">{{ accommodationCost | currency: 'TRY': 'symbol': '1.2-2' }}</span>
+              <span class="cost-value">{{ accommodationCost | tryFormat: 2 }}</span>
             </div>
           </div>
 
@@ -114,7 +115,7 @@ import { InvoiceService } from '../../services/invoice.service';
                   <ng-template pTemplate="body" let-extra>
                     <tr>
                       <td>{{ extra.description }}</td>
-                      <td style="text-align: right">{{ extra.amount | currency: 'TRY': 'symbol': '1.2-2' }}</td>
+                      <td style="text-align: right">{{ extra.amount | tryFormat: 2 }}</td>
                       <td style="text-align: center">
                         <button
                           pButton
@@ -131,7 +132,7 @@ import { InvoiceService } from '../../services/invoice.service';
 
             <div class="cost-row total-cost">
               <span>Genel Toplam</span>
-              <span class="cost-value">{{ totalAmount | currency: 'TRY': 'symbol': '1.2-2' }}</span>
+              <span class="cost-value">{{ totalAmount | tryFormat: 2 }}</span>
             </div>
           </div>
 
@@ -151,7 +152,7 @@ import { InvoiceService } from '../../services/invoice.service';
               icon="pi pi-check"
               [loading]="isCheckingOut"
               [disabled]="isCheckingOut"
-              class="p-button-success checkout-btn"
+              class="checkout-btn"
               (click)="onCheckout()"
             ></button>
           </div>
@@ -167,7 +168,7 @@ import { InvoiceService } from '../../services/invoice.service';
     .section-title {
       font-size: 1rem;
       font-weight: 700;
-      color: #1e3a5f;
+      color: #1B3A5C;
       margin: 0 0 1rem;
       display: flex;
       align-items: center;
@@ -175,7 +176,7 @@ import { InvoiceService } from '../../services/invoice.service';
     }
 
     .info-section {
-      background: #f8fafc;
+      background: #f8f9fa;
       border-radius: 12px;
       padding: 1.25rem;
       margin-bottom: 1.25rem;
@@ -219,21 +220,21 @@ import { InvoiceService } from '../../services/invoice.service';
     }
 
     .main-cost {
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e9ecef;
     }
 
     .total-cost {
-      border-top: 2px solid #1e3a5f;
+      border-top: 2px solid #1B3A5C;
       margin-top: 0.75rem;
       padding-top: 1rem;
       font-size: 1.1rem;
       font-weight: 700;
-      color: #1e3a5f;
+      color: #1B3A5C;
     }
 
     .cost-value {
       font-weight: 700;
-      color: #1e3a5f;
+      color: #1B3A5C;
     }
 
     .extras-section {
@@ -272,12 +273,12 @@ import { InvoiceService } from '../../services/invoice.service';
       gap: 0.75rem;
       margin-top: 1.5rem;
       padding-top: 1.25rem;
-      border-top: 1px solid #e5e7eb;
+      border-top: 1px solid #e9ecef;
     }
 
-    .checkout-btn {
-      background: linear-gradient(135deg, #059669, #10b981);
-      border: none;
+    :host ::ng-deep .checkout-btn {
+      background: linear-gradient(135deg, #C41E3A, #8B0000) !important;
+      border: none !important;
     }
   `,
 })

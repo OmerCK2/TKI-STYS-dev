@@ -92,14 +92,15 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.SetIsOriginAllowed(_ => true)
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
 var firestoreProjectId = builder.Configuration["Firestore:ProjectId"] ?? "your-project-id";
-var firestoreCredentialsPath = builder.Configuration["Firestore:CredentialsPath"] ?? Path.Combine(AppContext.BaseDirectory, "serviceAccountKey.json");
+var firestoreCredentialsPath = Path.Combine(AppContext.BaseDirectory, "serviceAccountKey.json");
 
 builder.Services.AddDataAccess(firestoreProjectId, firestoreCredentialsPath);
 

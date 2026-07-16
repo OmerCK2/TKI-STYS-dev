@@ -41,6 +41,7 @@ namespace TkiMisafirhane.API.Controllers
                 Expiration = DateTime.UtcNow.AddHours(8),
                 Username = user.Username,
                 Email = user.Email,
+                IsAdmin = user.IsAdmin,
                 RequiresPasswordChange = user.RequiresPasswordChange
             };
 
@@ -172,7 +173,7 @@ namespace TkiMisafirhane.API.Controllers
 
         [Authorize]
         [HttpGet("me")]
-        public ActionResult<ApiResponseDto<UserDto>> GetCurrentUser()
+        public async Task<ActionResult<ApiResponseDto<UserDto>>> GetCurrentUser()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
@@ -180,13 +181,21 @@ namespace TkiMisafirhane.API.Controllers
                 return Unauthorized();
             }
 
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
             var userDto = new UserDto
             {
-                Id = userId,
-                Username = User.FindFirst(ClaimTypes.Name)?.Value ?? "",
-                Email = User.FindFirst(ClaimTypes.Email)?.Value ?? "",
-                FirstName = User.FindFirst(ClaimTypes.GivenName)?.Value ?? "",
-                LastName = User.FindFirst(ClaimTypes.Surname)?.Value ?? ""
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsAdmin = user.IsAdmin,
+                RequiresPasswordChange = user.RequiresPasswordChange
             };
 
             return Ok(ApiResponseDto<UserDto>.SuccessResponse(userDto));

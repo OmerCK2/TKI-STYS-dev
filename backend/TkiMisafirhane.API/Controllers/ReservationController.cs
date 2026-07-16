@@ -17,17 +17,23 @@ namespace TkiMisafirhane.API.Controllers
         private readonly IReservationRepository _reservationRepository;
         private readonly IGuestRepository _guestRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly IInvoiceRepository _invoiceRepository;
+        private readonly IExtraChargeRepository _extraChargeRepository;
         private readonly IHubContext<RoomHub> _hubContext;
 
         public ReservationController(
             IReservationRepository reservationRepository,
             IGuestRepository guestRepository,
             IRoomRepository roomRepository,
+            IInvoiceRepository invoiceRepository,
+            IExtraChargeRepository extraChargeRepository,
             IHubContext<RoomHub> hubContext)
         {
             _reservationRepository = reservationRepository;
             _guestRepository = guestRepository;
             _roomRepository = roomRepository;
+            _invoiceRepository = invoiceRepository;
+            _extraChargeRepository = extraChargeRepository;
             _hubContext = hubContext;
         }
 
@@ -185,6 +191,33 @@ namespace TkiMisafirhane.API.Controllers
                 room.Status = RoomStatus.Empty;
                 await _roomRepository.UpdateAsync(room);
                 await _hubContext.Clients.All.SendAsync("RoomStatusUpdated", new { roomId = room.Id, status = RoomStatus.Empty });
+            }
+
+            if (guest != null && room != null)
+            {
+                var checkOutDate = checkOutDto.CheckOutDate;
+                var numberOfNights = (int)(checkOutDate - reservation.CheckInDate).TotalDays;
+                if (numberOfNights < 1) numberOfNights = 1;
+
+                var nightlyRate = guest.Type == GuestType.TkiPersonnel ? room.NightlyRateTki : room.NightlyRateCivilian;
+                var accommodationCost = numberOfNights * nightlyRate;
+
+                var invoice = new Core.Entities.Invoice
+                {
+                    ReservationId = reservation.Id,
+                    GuestId = guest.Id,
+                    IssueDate = DateTime.UtcNow,
+                    CheckInDate = reservation.CheckInDate,
+                    CheckOutDate = checkOutDate,
+                    NumberOfNights = numberOfNights,
+                    NightlyRate = nightlyRate,
+                    AccommodationCost = accommodationCost,
+                    ExtrasCost = 0,
+                    TotalAmount = accommodationCost,
+                    Status = Core.Enums.InvoiceStatus.Pending
+                };
+
+                await _invoiceRepository.CreateAsync(invoice);
             }
 
             var reservationDto = new ReservationDto

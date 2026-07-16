@@ -33,7 +33,7 @@ import { MessageService } from 'primeng/api';
       [draggable]="false"
       [resizable]="false"
       header="Check-in - Misafir Kayıt"
-      [style]="{ width: '580px', maxHeight: '90vh' }"
+      [style]="{ width: '600px', maxHeight: '90vh' }"
       [closable]="true"
       (onHide)="onClose()"
     >
@@ -41,7 +41,7 @@ import { MessageService } from 'primeng/api';
         <div class="checkin-content">
           <div class="room-badge">
             <i class="pi pi-home"></i>
-            <span>Oda {{ room.roomNumber }}</span>
+            <span>Oda {{ room.roomNumber }} — Kat {{ room.floor }}</span>
           </div>
 
           <form [formGroup]="checkinForm" (ngSubmit)="onSubmit()">
@@ -178,6 +178,7 @@ import { MessageService } from 'primeng/api';
                 icon="pi pi-check"
                 [loading]="isLoading"
                 [disabled]="checkinForm.invalid || isLoading"
+                class="checkin-btn"
               ></button>
             </div>
           </form>
@@ -194,12 +195,12 @@ import { MessageService } from 'primeng/api';
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: linear-gradient(135deg, #059669, #10b981);
+      background: linear-gradient(135deg, #1B3A5C, #0D1F33);
       color: #fff;
       padding: 0.625rem 1.25rem;
       border-radius: 10px;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin-bottom: 1.5rem;
     }
 
@@ -231,7 +232,7 @@ import { MessageService } from 'primeng/api';
     }
 
     .field-error {
-      color: #dc2626;
+      color: #C41E3A;
       font-size: 0.78rem;
       margin-top: 0.3rem;
       display: block;
@@ -239,7 +240,7 @@ import { MessageService } from 'primeng/api';
 
     :host ::ng-deep input.ng-invalid.ng-touched,
     :host ::ng-deep .p-inputmask.ng-invalid.ng-touched .p-inputtext {
-      border-color: #dc2626 !important;
+      border-color: #C41E3A !important;
     }
 
     .actions {
@@ -248,7 +249,12 @@ import { MessageService } from 'primeng/api';
       gap: 0.75rem;
       margin-top: 1.75rem;
       padding-top: 1.25rem;
-      border-top: 1px solid #e5e7eb;
+      border-top: 1px solid #e9ecef;
+    }
+
+    :host ::ng-deep .checkin-btn {
+      background: linear-gradient(135deg, #1B3A5C, #0D1F33) !important;
+      border: none !important;
     }
   `,
 })
